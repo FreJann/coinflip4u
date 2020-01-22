@@ -10,12 +10,21 @@ $(document).ready(function () {
         console.log(contractInstance);
     });
     $("#flip_button").click(flip);
+    $("#fund_button").click(fund);
 });
 
 function flip() {
-    contractInstance.methods.flip().call().then(function(res){
+    contractInstance.methods.flip().call().then(function (res) {
         console.log(res);
         //let int_res = res.toNumber();
         $("#result_output").text(res);
+    })
+}
+
+function fund() {
+    contractInstance.methods.increaseFunds().send({
+        value: web3.utils.toWei("1", "ether")
+    }).then(function () {
+        console.log("Funds increased");
     })
 }
