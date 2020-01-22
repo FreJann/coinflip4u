@@ -1,5 +1,5 @@
 var web3 = new Web3(Web3.givenProvider);
-var contractAddress = '0x39458b596B40DBe186AC8EBa9050Ba8d8DC0B47f';
+var contractAddress = '0x36D84Afe89E3548644356bC4f1D75D77A9aE07F8';
 var contractInstance;
 
 $(document).ready(function () {
@@ -14,7 +14,9 @@ $(document).ready(function () {
 });
 
 function flip() {
-    contractInstance.methods.flip().call().then(function (res) {
+    contractInstance.methods.flip().send({
+        value: web3.utils.toWei("0.05", "ether")
+    }).then(function (res) {
         console.log(res);
         //let int_res = res.toNumber();
         $("#result_output").text(res);

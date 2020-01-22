@@ -12,7 +12,7 @@ contract coinflip4u is Ownable{
         _;
     }
     
-    function flip() public payable costs (0.05 ether) returns(uint)  {
+    function flip() public payable costs(0.05 ether) returns(uint)  {
         
         require(msg.value <= balance, "Contract doesn't have enough funds to pay out potential win");
         balance += msg.value;
@@ -31,7 +31,7 @@ contract coinflip4u is Ownable{
         return winnings;
     }
 
-    function increaseFunds() public payable costs (1 ether) {
+    function increaseFunds() public payable costs(1 ether) {
         balance += msg.value;
     }
     
