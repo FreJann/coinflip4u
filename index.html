@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <title>People</title>
-  
+
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"
     integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
   <script type="text/javascript" src="./web3.min.js"></script>
@@ -30,22 +30,29 @@
     </div>
   </div>
   <div class="container">
+    <span id="result_output">Try your luck!</span>
+  </div>
+  <div class="container">
     <div>
-      <h2>How much do you want to bet (in ETH)?</h2>
-      <div class="input-group mb-3">
-        <input type="text" class="form-control" id="amount_input" placeholder="Betting amount">
-      </div>
       <button type="button" id="flip_button" class="btn btn-primary">Flip coin!</button>
-      <button type="button" id="fund_button" class="btn btn-primary">Increase funds by 1 ETH</button>
-    </div>
-    <div>
-      <h2>Result</h2>
-      <div>
-        <span id="result_output"></span>
-      </div>
+      <button type="button" id="fund_button" class="btn btn-success">Increase funds by 1 ETH</button>
+      <button type="button" id="retrieve_button" class="btn btn-warning">Withdraw funds (only owner)</button>
+      <button type="button" id="close_button" class="btn btn-danger">Close contract (only owner)</button>
     </div>
   </div>
+  <!-- Footer -->
+  <footer class="page-footer font-small blue">
+    <div class="footer-copyright text-center py-3">This project was made for educational purposes only. Do not send real
+      ether.
+    </div>
+    <!-- Copyright -->
+    <div class="footer-copyright text-center py-3">The repository for this project can be found <a
+        href="https://github.com/FreJann/coinflip4u">here</a>.
+    </div>
+    <!-- Copyright -->
 
+  </footer>
+  <!-- Footer -->
 </body>
 
 </html>

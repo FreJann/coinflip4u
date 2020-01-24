@@ -8,27 +8,23 @@ contract coinflip4u is Ownable{
     event coinFlipped(address sender, uint result);
 
     modifier costs(uint cost){
-        require(msg.value >= cost);
+        require(msg.value >= cost, "Value insufficient");
         _;
     }
     
     function flip() public payable costs(0.05 ether) returns(uint)  {
         
         require(msg.value <= balance, "Contract doesn't have enough funds to pay out potential win");
+
         balance += msg.value;
-        uint winnings;
         uint result = now % 2;
         emit coinFlipped(msg.sender, result);
-        
         if(result == 0){
-            winnings = 0.1 ether;
-            msg.sender.transfer(winnings);
-        }
-        else{
-            winnings = 0 ether;
+            balance -= 0.1 ether;
+            msg.sender.transfer(0.1 ether);
         }
         
-        return winnings;
+        return result;
     }
 
     function increaseFunds() public payable costs(1 ether) {
@@ -36,10 +32,15 @@ contract coinflip4u is Ownable{
     }
     
     function withdrawFunds() public onlyOwner returns(uint){
-        uint toTransfer = balance;
+        uint transferredBalance = balance;
         balance = 0;
-        msg.sender.transfer(toTransfer);
-        return toTransfer;
+        msg.sender.transfer(transferredBalance);
+        return transferredBalance;
     }
     
+    function close() public onlyOwner{
+        msg.sender.transfer(balance);
+        balance = 0;
+        selfdestruct(msg.sender);
+    }
 }

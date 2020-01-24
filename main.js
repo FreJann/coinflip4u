@@ -1,5 +1,5 @@
 var web3 = new Web3(Web3.givenProvider);
-var contractAddress = '0x36D84Afe89E3548644356bC4f1D75D77A9aE07F8';
+var contractAddress = 'address_goes_here';
 var contractInstance;
 
 $(document).ready(function () {
@@ -11,15 +11,22 @@ $(document).ready(function () {
     });
     $("#flip_button").click(flip);
     $("#fund_button").click(fund);
+    $("#retrieve_button").click(retrieve);
+    $("#close_button").click(close);
 });
 
 function flip() {
     contractInstance.methods.flip().send({
         value: web3.utils.toWei("0.05", "ether")
     }).then(function (res) {
-        console.log(res);
-        //let int_res = res.toNumber();
-        $("#result_output").text(res);
+        let result_uint = res.events.coinFlipped.returnValues[1];
+        console.log("Result: " + result_uint);
+        if(result_uint == 0){
+            $("#result_output").text("Congratulations! You have won 0.1 ETH. The amount has been sent to your wallet.");
+        }
+        else{
+            $("#result_output").text("Aww! You lost. Better luck next time!");
+        }
     })
 }
 
@@ -28,5 +35,18 @@ function fund() {
         value: web3.utils.toWei("1", "ether")
     }).then(function () {
         console.log("Funds increased");
+    })
+}
+
+function retrieve() {
+    contractInstance.methods.withdrawFunds().send().then(function (res) {
+        console.log("Funds withdrawn: \n");
+        console.log(res);
+    })
+}
+
+function close() {
+    contractInstance.methods.close().call().then(function() {
+        console.log("Contract closed.");
     })
 }
