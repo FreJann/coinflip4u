@@ -1,8 +1,8 @@
 pragma solidity 0.5.12;
 import "./Ownable.sol";
-//import "https://github.com/provable-things/ethereum-api/provableAPI.sol";
+import "https://github.com/provable-things/ethereum-api/provableAPI.sol";
 
-contract coinflip4u is Ownable/*, usingProvable*/{
+contract coinflip4u is Ownable, usingProvable{
 
     uint public balance;
     uint256 constant NUM_RANDOM_BYTES_REQUESTED = 1;
@@ -41,8 +41,8 @@ contract coinflip4u is Ownable/*, usingProvable*/{
         require(msg.value <= balance, "Contract doesn't have enough funds to pay out potential win");
 
         balance += msg.value;
-        uint result = now % 2;
-        //result = latestNumber;
+        //uint result = now % 2;
+        uint result = latestNumber;
         emit coinFlipped(msg.sender, result);
         if(result == 0){
             balance -= 0.1 ether;
