@@ -1,5 +1,5 @@
 var web3 = new Web3(Web3.givenProvider);
-var contractAddress = 'address_goes_here';
+var contractAddress = '0xb231F4a64D70D157cb17a763c73856B5A60911dc';
 var contractInstance;
 
 $(document).ready(function () {
@@ -21,10 +21,9 @@ function flip() {
     }).then(function (res) {
         let result_uint = res.events.coinFlipped.returnValues[1];
         console.log("Result: " + result_uint);
-        if(result_uint == 0){
+        if (result_uint == 0) {
             $("#result_output").text("Congratulations! You have won 0.1 ETH. The amount has been sent to your wallet.");
-        }
-        else{
+        } else {
             $("#result_output").text("Aww! You lost. Better luck next time!");
         }
     })
@@ -46,7 +45,7 @@ function retrieve() {
 }
 
 function close() {
-    contractInstance.methods.close().call().then(function() {
+    contractInstance.methods.close().call().then(function () {
         console.log("Contract closed.");
     })
 }

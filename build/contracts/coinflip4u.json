@@ -3537,6 +3537,33 @@
     "version": "0.5.12+commit.7709ece9.Emscripten.clang"
   },
   "networks": {
+    "3": {
+      "events": {
+        "0xfa2a99928eb1170d3fd43cae98eab031fed6647e80297642ba4bcf85eb54ea35": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "sender",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "result",
+              "type": "uint256"
+            }
+          ],
+          "name": "coinFlipped",
+          "type": "event",
+          "signature": "0xfa2a99928eb1170d3fd43cae98eab031fed6647e80297642ba4bcf85eb54ea35"
+        }
+      },
+      "links": {},
+      "address": "0xb231F4a64D70D157cb17a763c73856B5A60911dc",
+      "transactionHash": "0x6a265e3a2c83a8c8af46e077b4fbe3ffde0094654118457b2a4686d13fcc51d1"
+    },
     "5777": {
       "events": {
         "0xfa2a99928eb1170d3fd43cae98eab031fed6647e80297642ba4bcf85eb54ea35": {
@@ -3566,7 +3593,7 @@
     }
   },
   "schemaVersion": "3.0.16",
-  "updatedAt": "2020-01-24T07:44:37.680Z",
+  "updatedAt": "2020-01-24T09:23:03.365Z",
   "devdoc": {
     "methods": {}
   },
