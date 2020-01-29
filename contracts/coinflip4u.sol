@@ -1,6 +1,6 @@
 pragma solidity 0.5.12;
 import "./Ownable.sol";
-import "https://github.com/provable-things/ethereum-api/provableAPI.sol";
+import "./provableAPI.sol";
 
 contract coinflip4u is Ownable, usingProvable{
 
@@ -11,6 +11,8 @@ contract coinflip4u is Ownable, usingProvable{
     event coinFlipped(address sender, uint result);
     event LogNewProvableQuery(string description);
     event generatedRandomNumber(uint256 randomNumber);
+
+    mapping(address => bool) public isPlaying;
 
     modifier costs(uint cost){
         require(msg.value >= cost, "Value insufficient");
@@ -23,9 +25,8 @@ contract coinflip4u is Ownable, usingProvable{
     
     function __callback(bytes32 _queryID, string memory _result, bytes memory _proof) public{
         require(msg.sender == provable_cbAddress());
-
-        uint256 randomNumber = uint256(keccak256(abi.encodePacked(_result))) % 2;
-        latestNumber = randomNumber;
+        uint256 randomNumber = uint256(keccak256(abi.encodePacked(_result)));
+        latestNumber = randomNumber % 2;
         emit generatedRandomNumber(randomNumber);
     }
 
@@ -39,17 +40,24 @@ contract coinflip4u is Ownable, usingProvable{
     function flip() public payable costs(0.05 ether) returns(uint)  {
         
         require(msg.value <= balance, "Contract doesn't have enough funds to pay out potential win");
-
-        balance += msg.value;
-        //uint result = now % 2;
-        uint result = latestNumber;
-        emit coinFlipped(msg.sender, result);
-        if(result == 0){
-            balance -= 0.1 ether;
-            msg.sender.transfer(0.1 ether);
+        address player = msg.sender;
+        if(!isPlaying[player]){
+            balance += msg.value;
+            //uint result = now % 2;
+            isPlaying[player] = true;
+            update();
+            uint result = latestNumber;
+            emit coinFlipped(player, result);
+            if(result == 0){
+                balance -= 0.1 ether;
+                msg.sender.transfer(0.1 ether);
+            }
+            isPlaying[player] = false;
+            return result;
         }
-        
-        return result;
+        else{
+            return 2;
+        }
     }
 
     function increaseFunds() public payable costs(1 ether) {

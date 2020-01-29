@@ -1,5 +1,5 @@
 var web3 = new Web3(Web3.givenProvider);
-var contractAddress = '0xb231F4a64D70D157cb17a763c73856B5A60911dc';
+var contractAddress = '0xee990eB5f97E1451D9563777A5c066961E92BAe7';
 var contractInstance;
 
 $(document).ready(function () {
@@ -16,16 +16,21 @@ $(document).ready(function () {
 });
 
 function flip() {
+    $("#result_output").text("Waiting for transaction...");
     contractInstance.methods.flip().send({
         value: web3.utils.toWei("0.05", "ether")
     }).then(function (res) {
+        $("#result_output").text("Transaction successful, awaiting result...");
         let result_uint = res.events.coinFlipped.returnValues[1];
         console.log("Result: " + result_uint);
         if (result_uint == 0) {
             $("#result_output").text("Congratulations! You have won 0.1 ETH. The amount has been sent to your wallet.");
-        } else {
+        } else if (result_uint == 2) {
+            alert("You cannot request more than one coin flip at the same time!");
+        } else if(result_uint == 1) {
             $("#result_output").text("Aww! You lost. Better luck next time!");
         }
+
     })
 }
 
